@@ -9,7 +9,7 @@ const CarouselSection = () => {
       <Carousel showThumbs={false} autoPlay infiniteLoop showStatus={false} className="relative">
         {/* Slide 1 */}
         <div className="relative">
-          <img src="/images/slide1.png" alt="Slide 1" className="w-full h-[600px] object-cover" />
+          <img src="/public/images/slide1.png" alt="Slide 1" className="w-full h-[600px] object-cover" />
           <div className="absolute inset-0 bg-black/10 flex flex-col items-start justify-center pl-16 text-left">
             <p className="text-[rgb(128,153,11)] text-sm font-semibold">HUMILITY ORGANIC PRODUCTS</p>
             <h2 className="text-5xl font-bold text-black leading-tight mt-2">
