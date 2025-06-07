@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --lightYellow: #f6d876;
+    --white2: #fffbf2;
+    --darkGreen: #05ab54;
+    --dark: #1e1e1e;
+  }
+}
+
+/* Define Font Families */
+@layer base {
+  @font-face {
+    font-family: "Poppins";
+    src: url("/path-to-fonts/Poppins-Regular.woff2") format("woff2");
+  }
+
+  @font-face {
+    font-family: "League Gothic";
+    src: url("/path-to-fonts/LeagueGothic-Regular.woff2") format("woff2");
+  }
+}
+
+/* Utility Classes for Colors */
+@layer utilities {
+  .text-lightYellow {
+    color: var(--lightYellow);
+  }
+  .bg-lightYellow {
+    background-color: var(--lightYellow);
+  }
+  .text-white2 {
+    color: var(--white2);
+  }
+  .bg-white2 {
+    background-color: var(--white2);
+  }
+  .text-darkGreen {
+    color: var(--darkGreen);
+  }
+  .bg-darkGreen {
+    background-color: var(--darkGreen);
+  }
+  .text-dark {
+    color: var(--dark);
+  }
+  .bg-dark {
+    background-color: var(--dark);
+  }
+}
+
+/* Utility Classes for Font Families */
+@layer utilities {
+  .font-sans {
+    font-family: "Poppins", sans-serif;
+  }
+  .font-league {
+    font-family: "League Gothic", sans-serif;
+  }
+}
+
+/* Container Styles */
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 4rem;
+      padding-right: 4rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .container {
+      padding-left: 5rem;
+      padding-right: 5rem;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .container {
+      padding-left: 6rem;
+      padding-right: 6rem;
+    }
+  }
+}
+
