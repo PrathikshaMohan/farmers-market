@@ -233,149 +233,186 @@ const generateYesterdayFarmerPDF = () => {
 
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-3xl font-extrabold mb-6 text-[rgb(128,153,11)]">🛒 Market Prices</h1>
+    <div className="w-full min-h-screen bg-white p-4 sm:p-6 max-w-7xl mx-auto">
+  <div className="max-w-6xl mx-auto">
+    <h1 className="text-2xl sm:text-3xl font-extrabold mb-6 text-[rgb(128,153,11)]">🛒 Market Prices</h1>
 
-      <div className="flex gap-3 mb-6">
-        {['all', 'today', 'yesterday'].map((d) => (
-          <button
-            key={d}
-            onClick={() => setFilter(d)}
-            className={`px-5 py-2 rounded-full border transition-colors duration-300 ${
-              filter === d
-                ? 'bg-[rgb(128,153,11)] text-white border-[rgb(128,153,11)]'
-                : 'bg-white text-gray-700 border-gray-300 hover:bg-[rgb(128,153,11)] hover:text-white'
-            }`}
-          >
-            {d.charAt(0).toUpperCase() + d.slice(1)}
-          </button>
-        ))}
-      </div>
+    {/* Filters */}
+    <div className="flex flex-wrap gap-3 mb-6">
+      {['all', 'today', 'yesterday'].map((d) => (
+        <button
+          key={d}
+          onClick={() => setFilter(d)}
+          className={`px-5 py-2 rounded-full border transition-colors duration-300 ${
+            filter === d
+              ? 'bg-[rgb(128,153,11)] text-white border-[rgb(128,153,11)]'
+              : 'bg-white text-gray-700 border-gray-300 hover:bg-[rgb(128,153,11)] hover:text-white'
+          }`}
+        >
+          {d.charAt(0).toUpperCase() + d.slice(1)}
+        </button>
+      ))}
+    </div>
 
-      <div className="mb-6">
-        {role === 'admin' && prices.length > 0 && (
-          <button
-            onClick={generateAdminPDF}
-            className="mr-5 bg-[rgb(64,85,13)] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[rgb(128,153,11)] transition-colors duration-300 shadow-md"
-          >
-            📄 Download Full Admin Report
-          </button>
-        )}
-
-{role === 'farmer' && prices.length > 0 && (
-  <div className="flex gap-4">
-    <button
-      onClick={generateFarmerPDF}
-      className="bg-[rgb(128,153,11)] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[rgb(64,85,13)] transition-colors duration-300 shadow-md"
-    >
-      📄 Download Today’s Prices
-    </button>
-    <button
-      onClick={generateYesterdayFarmerPDF}
-      className="bg-[rgb(64,85,13)] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[rgb(128,153,11)] transition-colors duration-300 shadow-md"
-    >
-      📄 Download Yesterday’s Prices
-    </button>
-  </div>
-)}
-
-
-
-      </div>
-
-      {role === 'admin' && (
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-5 gap-5 mb-8">
-          <input
-            type="text"
-            placeholder="Product Name"
-            value={form.product_name}
-            onChange={(e) => setForm({ ...form, product_name: e.target.value })}
-            className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(128,153,11)]"
-            required
-          />
-          <input
-            type="text"
-            placeholder="Location"
-            value={form.location}
-            onChange={(e) => setForm({ ...form, location: e.target.value })}
-            className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(128,153,11)]"
-            required
-          />
-          <input
-            type="number"
-            step="0.01"
-            placeholder="Price per KG"
-            value={form.price_per_kg}
-            onChange={(e) => setForm({ ...form, price_per_kg: e.target.value })}
-            className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(128,153,11)]"
-            required
-          />
-          <input
-            type="text"
-            placeholder="Category (e.g. Grain, Vegetable)"
-            value={form.category}
-            onChange={(e) => setForm({ ...form, category: e.target.value })}
-            className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(128,153,11)]"
-          />
-          <button
-            type="submit"
-            className="bg-[rgb(128,153,11)] text-white px-5 py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors duration-300 shadow-md"
-          >
-            {editingId ? 'Update' : 'Add'}
-          </button>
-        </form>
+    {/* Report Buttons */}
+    <div className="mb-6 flex flex-col sm:flex-row gap-4">
+      {role === 'admin' && prices.length > 0 && (
+        <button
+          onClick={generateAdminPDF}
+          className="bg-[rgb(64,85,13)] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[rgb(128,153,11)] transition shadow-md"
+        >
+          📄 Download Full Admin Report
+        </button>
       )}
 
-      <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-200">
-        <table className="min-w-full bg-white rounded-lg">
-          <thead className="bg-[rgb(128,153,11)] text-white">
-            <tr>
-              <th className="py-3 px-5 text-left rounded-tl-lg">Product</th>
-              <th className="py-3 px-5 text-left">Location</th>
-              <th className="py-3 px-5 text-left">Price (Rs/kg)</th>
-              {role === 'admin' && <th className="py-3 px-5 text-left">Category</th>}
-              <th className="py-3 px-5 text-left">Date</th>
-              {role === 'admin' && <th className="py-3 px-5 text-center rounded-tr-lg">Actions</th>}
-            </tr>
-          </thead>
-          <tbody>
-            {prices.length === 0 ? (
-              <tr>
-                <td colSpan={role === 'admin' ? 6 : 5} className="text-center py-6 text-gray-500 italic">
-                  No records found.
-                </td>
-              </tr>
-            ) : (
-              prices.map((item) => (
-                <tr key={item.id} className="border-b hover:bg-gray-50">
-                  <td className="py-3 px-5">{item.product_name}</td>
-                  <td className="py-3 px-5">{item.location}</td>
-                  <td className="py-3 px-5">Rs. {item.price_per_kg}</td>
-                  {role === 'admin' && <td className="py-3 px-5">{item.category}</td>}
-                  <td className="py-3 px-5">{new Date(item.date).toLocaleDateString('en-GB')}</td>
-                  {role === 'admin' && (
-                    <td className="py-3 px-5 text-center">
-                      <button
-                        onClick={() => handleEdit(item)}
-                        className="text-blue-600 hover:underline mr-3"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(item.id)}
-                        className="text-red-600 hover:underline"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  )}
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+      {role === 'farmer' && prices.length > 0 && (
+        <>
+          <button
+            onClick={generateFarmerPDF}
+            className="bg-[rgb(128,153,11)] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[rgb(64,85,13)] transition shadow-md"
+          >
+            📄 Download Today’s Prices
+          </button>
+          <button
+            onClick={generateYesterdayFarmerPDF}
+            className="bg-[rgb(64,85,13)] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[rgb(128,153,11)] transition shadow-md"
+          >
+            📄 Download Yesterday’s Prices
+          </button>
+        </>
+      )}
     </div>
+
+    {/* Form */}
+    {role === 'admin' && (
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+        <input
+          type="text"
+          placeholder="Product Name"
+          value={form.product_name}
+          onChange={(e) => setForm({ ...form, product_name: e.target.value })}
+          className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(128,153,11)]"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Location"
+          value={form.location}
+          onChange={(e) => setForm({ ...form, location: e.target.value })}
+          className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(128,153,11)]"
+          required
+        />
+        <input
+          type="number"
+          step="0.01"
+          placeholder="Price per KG"
+          value={form.price_per_kg}
+          onChange={(e) => setForm({ ...form, price_per_kg: e.target.value })}
+          className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(128,153,11)]"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Category (e.g. Grain, Vegetable)"
+          value={form.category}
+          onChange={(e) => setForm({ ...form, category: e.target.value })}
+          className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(128,153,11)]"
+        />
+        <button
+          type="submit"
+          className="bg-[rgb(128,153,11)] text-white px-5 py-3 rounded-lg font-semibold hover:bg-gray-700 transition shadow-md"
+        >
+          {editingId ? 'Update' : 'Add'}
+        </button>
+      </form>
+    )}
+
+    {/* Table for large screens */}
+    <div className="hidden md:block overflow-x-auto rounded-lg shadow-lg border border-gray-200">
+      <table className="min-w-full bg-white rounded-lg text-sm">
+        <thead className="bg-[rgb(128,153,11)] text-white">
+          <tr>
+            <th className="py-3 px-5 text-left rounded-tl-lg">Product</th>
+            <th className="py-3 px-5 text-left">Location</th>
+            <th className="py-3 px-5 text-left">Price (Rs/kg)</th>
+            {role === 'admin' && <th className="py-3 px-5 text-left">Category</th>}
+            <th className="py-3 px-5 text-left">Date</th>
+            {role === 'admin' && <th className="py-3 px-5 text-center rounded-tr-lg">Actions</th>}
+          </tr>
+        </thead>
+        <tbody>
+          {prices.length === 0 ? (
+            <tr>
+              <td colSpan={role === 'admin' ? 6 : 5} className="text-center py-6 text-gray-500 italic">
+                No records found.
+              </td>
+            </tr>
+          ) : (
+            prices.map((item) => (
+              <tr key={item.id} className="border-b hover:bg-gray-50">
+                <td className="py-3 px-5">{item.product_name}</td>
+                <td className="py-3 px-5">{item.location}</td>
+                <td className="py-3 px-5">Rs. {item.price_per_kg}</td>
+                {role === 'admin' && <td className="py-3 px-5">{item.category}</td>}
+                <td className="py-3 px-5">{new Date(item.date).toLocaleDateString('en-GB')}</td>
+                {role === 'admin' && (
+                  <td className="py-3 px-5 text-center">
+                    <button
+                      onClick={() => handleEdit(item)}
+                      className="text-blue-600 hover:underline mr-3"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(item.id)}
+                      className="text-red-600 hover:underline"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                )}
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
+
+    {/* Mobile view: card layout */}
+    <div className="md:hidden space-y-4 mt-6">
+      {prices.length === 0 ? (
+        <p className="text-center text-gray-500 italic">No records found.</p>
+      ) : (
+        prices.map((item) => (
+          <div key={item.id} className="bg-white border rounded-lg shadow p-4">
+            <p><strong>Product:</strong> {item.product_name}</p>
+            <p><strong>Location:</strong> {item.location}</p>
+            <p><strong>Price:</strong> Rs. {item.price_per_kg}</p>
+            {role === 'admin' && <p><strong>Category:</strong> {item.category}</p>}
+            <p><strong>Date:</strong> {new Date(item.date).toLocaleDateString('en-GB')}</p>
+            {role === 'admin' && (
+              <div className="mt-3 flex justify-end gap-3">
+                <button
+                  onClick={() => handleEdit(item)}
+                  className="text-blue-600 hover:underline"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(item.id)}
+                  className="text-red-600 hover:underline"
+                >
+                  Delete
+                </button>
+              </div>
+            )}
+          </div>
+        ))
+      )}
+    </div>
+  </div>
+</div>
+
   );
 };
 

@@ -124,12 +124,14 @@ const BASE_URL = import.meta.env.VITE_API_URL;
     <>
       {/* Header */}
       <header className="bg-[#8FBC8B] text-white p-4 shadow-md">
-        <div className="flex items-center justify-between px-6 py-2">
+        <div className="flex flex-col md:flex-row items-center justify-between px-4 md:px-6 py-2 gap-4">
+
           <h1 className="text-2xl font-bold text-[rgb(128,153,11)]">
             Fresh<span className="text-black">Harvest.</span>
           </h1>
 
-          <div className="flex-grow max-w-xl mx-6 flex bg-white rounded overflow-hidden">
+          <div className="w-full md:max-w-xl flex bg-white rounded overflow-hidden">
+
             <input
               type="text"
               value={searchTerm}
@@ -153,7 +155,8 @@ const BASE_URL = import.meta.env.VITE_API_URL;
             </button>
           </div>
 
-          <div className="flex items-center gap-4 text-white text-lg">
+          <div className="flex items-center gap-4 text-white text-lg mt-2 md:mt-0">
+
             <Link to="/cart" className="relative">
               <FaShoppingCart className="cursor-pointer text-xl hover:text-black" />
               {cartCount > 0 && (
@@ -205,7 +208,8 @@ const BASE_URL = import.meta.env.VITE_API_URL;
           </div>
         </div>
 
-        <nav className="bg-[#8FBC8B] px-6 py-2 flex items-center justify-between text-sm">
+        <nav className="bg-[#8FBC8B] px-4 py-2 flex flex-wrap items-center justify-between text-sm">
+
           <div className="flex gap-6">
             <div className="relative group cursor-pointer font-semibold">
               Shop All Groceries ▾
@@ -224,7 +228,8 @@ const BASE_URL = import.meta.env.VITE_API_URL;
       </header>
 
       {/* Banner */}
-      <div className="relative w-full h-64 rounded-xl overflow-hidden">
+      <div className="relative w-full h-48 md:h-64 lg:h-80 rounded-xl overflow-hidden">
+
         <video className="object-cover w-full h-full" autoPlay muted loop>
           <source src="/product.mp4" type="video/mp4" />
           Your browser does not support the video tag.
@@ -245,8 +250,9 @@ const BASE_URL = import.meta.env.VITE_API_URL;
       </div>
 
       {/* Main Section */}
-      <div className="mt-8 grid grid-cols-12 gap-6">
-        <aside className="col-span-3 bg-gray-100 p-4 rounded-lg">
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-12 gap-6">
+  <aside className="md:col-span-3 bg-gray-100 p-4 rounded-lg">
+
           <h3 className="text-lg font-semibold mb-4">Categories</h3>
           <ul className="space-y-2">
             {categories.map((cat, index) => (
@@ -264,7 +270,7 @@ const BASE_URL = import.meta.env.VITE_API_URL;
             ))}
           </ul>
         </aside>
-<div className="col-span-9 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
+<div className="md:col-span-9 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
   {filteredProducts.map((product) => (
     <div
       key={product.id}
