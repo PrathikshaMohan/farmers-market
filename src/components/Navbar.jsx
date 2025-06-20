@@ -44,7 +44,7 @@ const Navbar = () => {
 
       {/* Mobile Menu Dropdown */}
       {isMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-white shadow-md md:hidden z-10">
+        <div className="absolute top-full left-0 w-full bg-white shadow-md md:hidden z-50">
           <ul className="flex flex-col space-y-4 p-6 text-lg font-medium text-gray-700">
             <li>
               <Link to="/" onClick={() => setIsMenuOpen(false)} className="hover:text-[rgb(128,153,11)]">Home</Link>
