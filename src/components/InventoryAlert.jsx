@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 
 const InventoryAlert = () => {
   const [alerts, setAlerts] = useState([]);
@@ -18,8 +18,8 @@ const InventoryAlert = () => {
     const fetchAlerts = async () => {
       try {
         
-        const res = await axios.get(
-          `http://localhost:5000/api/inventory/low-stock?farmerId=${farmerId}`
+        const res = await api.get(
+          `/inventory/low-stock?farmerId=${farmerId}`
         );
         setAlerts(res.data);
       } catch (err) {

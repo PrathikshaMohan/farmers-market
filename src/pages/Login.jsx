@@ -7,7 +7,7 @@ import { useNavigate} from 'react-router-dom';
 const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
 const [location, setLocation] = useState('');
-
+const BASE_URL = import.meta.env.VITE_API_URL;
   const [isSignUp, setIsSignUp] = useState(false);
   const [role, setRole] = useState('');
   const [full_name, setFullname] = useState('');
@@ -31,7 +31,7 @@ const [location, setLocation] = useState('');
     }),
   };
 
-  const res = await fetch('http://localhost:5000/api/signup', {
+  const res = await fetch(`${BASE_URL}/api/signup`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -57,7 +57,7 @@ const [location, setLocation] = useState('');
       password,
     };
   
-    const res = await fetch('http://localhost:5000/api/login', {
+    const res = await fetch(`${BASE_URL}/api/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),

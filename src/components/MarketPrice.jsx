@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from "../api";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
@@ -22,8 +22,8 @@ const MarketPrice = ({role}) => {
 
   const fetchPrices = async (selectedDate) => {
     try {
-      const url = `http://localhost:5000/api/market-prices${selectedDate !== 'all' ? `?date=${selectedDate}` : ''}`;
-      const res = await axios.get(url);
+      const url = `/market-prices${selectedDate !== 'all' ? `?date=${selectedDate}` : ''}`;
+      const res = await api.get(url);
       setPrices(res.data);
     } catch (error) {
       console.error('Error fetching market prices:', error);
@@ -34,9 +34,9 @@ const MarketPrice = ({role}) => {
     e.preventDefault();
     try {
       if (editingId) {
-        await axios.put(`http://localhost:5000/api/market-prices/${editingId}`, form);
+        await api.put(`/market-prices/${editingId}`, form);
       } else {
-        await axios.post('http://localhost:5000/api/market-prices', form);
+        await api.post('/market-prices', form);
       }
       setForm({ product_name: '', location: '', price_per_kg: '', category: '' });
       setEditingId(null);
@@ -59,7 +59,7 @@ const MarketPrice = ({role}) => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this entry?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/market-prices/${id}`);
+        await api.delete(`/market-prices/${id}`);
         fetchPrices(filter);
       } catch (error) {
         console.error('Error deleting market price:', error);

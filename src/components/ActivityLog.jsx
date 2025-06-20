@@ -1,6 +1,6 @@
 import { ShieldCheck, User2, Tractor } from 'lucide-react';
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from "../api";
 
 const roleIcon = {
   admin: <ShieldCheck className="w-4 h-4 text-blue-600" />,
@@ -22,7 +22,7 @@ const ActivityLogSection = ({ logs = [], onClear }) => {
 
     try {
       setClearing(true);
-      await axios.post('http://localhost:5000/api/admin/clear');
+      await api.post('/admin/clear');
       onClear(); // Tell parent to refresh logs
     } catch (error) {
       console.error('Error clearing logs:', error);

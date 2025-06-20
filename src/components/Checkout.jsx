@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { jsPDF } from "jspdf"; 
 import Navbar from "../components/Navbar";
@@ -28,7 +28,7 @@ const CheckoutPage = () => {
     if (!userId) return;
     const fetchCart = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/cart/${userId}`);
+        const res = await api.get(`/cart/${userId}`);
         setItems(res.data);
       } catch (err) {
         console.error("Cart fetch error:", err);

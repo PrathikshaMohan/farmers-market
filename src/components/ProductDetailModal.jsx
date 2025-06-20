@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { useCart } from "./CartContext";
-import axios from "axios";
+import api from "../api";
 import { useNavigate } from "react-router-dom";
 
 const ProductDetailModal = ({ product, isOpen, onClose, onProductAdded }) => {
-
+const BASE_URL = import.meta.env.VITE_API_URL;
   const [quantity, setQuantity] = useState(0.1);
   const { increment } = useCart();
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const ProductDetailModal = ({ product, isOpen, onClose, onProductAdded }) => {
   }
 
   try {
-    await axios.post("http://localhost:5000/api/cart/add", {
+    await api.post("/cart/add", {
       user_id: user.id,
       product_id: product.id,
       quantity: parseFloat(quantity.toFixed(1)),
@@ -63,7 +63,7 @@ const ProductDetailModal = ({ product, isOpen, onClose, onProductAdded }) => {
         {/* Left - Image */}
         <div className="w-1/2 p-6 bg-gray-100 flex justify-center items-center">
           <img
-            src={`http://localhost:5000/uploads/${product.image}`}
+            src={`${BASE_URL}/uploads/${product.image}`}
             alt={product.name}
             className="rounded w-64 h-64 object-cover"
           />

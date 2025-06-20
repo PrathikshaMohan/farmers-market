@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from "../api";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -17,7 +17,7 @@ const Orders = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/notifications/orders/${farmerId}`);
+      const res = await api.get(`/orders/${farmerId}`);
       setOrders(res.data);
     } catch (err) {
       console.error('Failed to fetch orders:', err);
@@ -28,7 +28,7 @@ const Orders = () => {
 
   const handleCancel = async (orderId) => {
     try {
-      await axios.put(`http://localhost:5000/api/orders/${orderId}/status`, { status: 'Cancelled' });
+      await api.put(`/orders/${orderId}/status`, { status: 'Cancelled' });
       fetchOrders();
     } catch (err) {
       console.error('Failed to cancel order:', err);
@@ -42,7 +42,7 @@ const Orders = () => {
     }
 
     try {
-      await axios.put(`http://localhost:5000/api/orders/${orderId}/status`, { status: newStatus });
+      await api.put(`/orders/${orderId}/status`, { status: newStatus });
       fetchOrders();
     } catch (err) {
       console.error('Failed to update order status:', err);
@@ -51,7 +51,7 @@ const Orders = () => {
 
   const handlePickupSubmit = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/orders/${activePickupOrderId}/status`, {
+      await api.put(`/orders/${activePickupOrderId}/status`, {
         status: 'Ready for Pickup',
         pickup_location: pickupInfo.location,
         pickup_time_slot: pickupInfo.timeSlot,

@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 const Settings = () => {
+ 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,6 +21,7 @@ const Settings = () => {
   };
 
  const handleSubmit = async (e) => {
+   const BASE_URL = import.meta.env.VITE_API_URL;
   e.preventDefault();
 
   if (formData.password && formData.password !== formData.confirmPassword) {
@@ -28,7 +30,7 @@ const Settings = () => {
   }
 
   try {
-    const response = await fetch("http://localhost:5000/api/user/update-profile", {
+    const response = await fetch(`${BASE_URL}/api/user/update-profile`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

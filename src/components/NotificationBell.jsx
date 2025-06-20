@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Bell } from "lucide-react";
-import axios from "axios";
+import api from "../api";
 
 const NotificationBell = () => {
   const [notifications, setNotifications] = useState([]);
@@ -17,8 +17,8 @@ const NotificationBell = () => {
 
     const fetchNotifications = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:5000/api/notifications/${farmerId}`
+        const res = await api.get(
+          `/notifications/${farmerId}`
         );
         setNotifications(res.data);
       } catch (err) {

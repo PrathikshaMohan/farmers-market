@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FaShoppingCart,
@@ -28,10 +28,10 @@ const [orders, setOrders] = useState([]);
 const [showOrders, setShowOrders] = useState(false);
   const { cartCount } = useCart();
   const navigate = useNavigate();
-
+const BASE_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/products")
+    api
+      .get("/products")
       .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
@@ -66,8 +66,8 @@ const [showOrders, setShowOrders] = useState(false);
     return;
   }
 
-  axios
-    .get(`http://localhost:5000/api/orders/user/${user.id}`)
+  api
+    .get(`/orders/user/${user.id}`)
     .then((res) => {
       console.log("Fetched Orders:", res.data);
       if (res.data && res.data.length > 0) {
@@ -272,7 +272,7 @@ const [showOrders, setShowOrders] = useState(false);
     >
       <div className="overflow-hidden rounded-md mb-3">
         <img
-          src={`http://localhost:5000/uploads/${product.image}`}
+          src={`${BASE_URL}/uploads/${product.image}`}
           alt={product.name}
           className="h-40 w-full object-cover rounded-md transform transition-transform duration-500 hover:scale-110"
         />

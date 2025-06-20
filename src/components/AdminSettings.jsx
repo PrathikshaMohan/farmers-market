@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
+import api from "../api";
 const AdminSettings = () => {
   
   const [currentPassword, setCurrentPassword] = useState('');
@@ -16,7 +15,7 @@ const [messageType, setMessageType] = useState(''); // 'success' or 'error'
     return setMessage("New passwords do not match.");
   }
   try {
-    const res = await axios.put('http://localhost:5000/api/admin/update-password', {
+    const res = await api.put('/admin/update-password', {
       username: 'admin', 
       currentPassword,
       newPassword,

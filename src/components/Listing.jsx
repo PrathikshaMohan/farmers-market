@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import api from "../api";
 
 const Listing = () => {
   const [products, setProducts] = useState([]);
@@ -15,7 +15,8 @@ const Listing = () => {
   });
   
   const [imagePreview, setImagePreview] = useState(null);
-  
+  const BASE_URL = import.meta.env.VITE_API_URL;
+
   
   
   const fileInputRef = useRef(null); // to reset file input
@@ -35,7 +36,7 @@ const farmer_id = user?.id;
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/products/farmer/${Number(farmer_id)}`);
+      const res = await api.get(`/products/farmer/${Number(farmer_id)}`);
     console.log("Fetched products:", res.data); // 👈 Add this
       setProducts(res.data);
     } catch (err) {
@@ -82,12 +83,12 @@ const farmer_id = user?.id;
   try {
     if (editingProductId) {
       // Edit existing product
-      await axios.put(`http://localhost:5000/api/products/${editingProductId}`, data, {
+      await api.put(`/products/${editingProductId}`, data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
     } else {
       // Add new product
-      await axios.post("http://localhost:5000/api/products", data, {
+      await api.post("/products", data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
     }
@@ -126,7 +127,7 @@ const farmer_id = user?.id;
     }
   
     try {
-      await axios.put(`http://localhost:5000/api/products/${editingProductId}`, data, {
+      await api.put(`/products/${editingProductId}`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -142,7 +143,7 @@ const farmer_id = user?.id;
   
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`);
+      await api.delete(`/products/${id}`);
       fetchProducts(); // Refresh product list
     } catch (err) {
       console.error("Error deleting product:", err);
@@ -160,7 +161,7 @@ const farmer_id = user?.id;
     image: null, // don't auto fill image
     category: product.category || "",
   });
-  setImagePreview(`http://localhost:5000/uploads/${product.image}`);
+  setImagePreview(`${BASE_URL}/uploads/${product.image}`);
 };
   
   
@@ -296,7 +297,7 @@ const resetForm = () => {
             className="bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-2xl transition-shadow duration-300 overflow-hidden flex flex-col"
           >
             <img
-              src={`http://localhost:5000/uploads/${product.image}`}
+              src={`${BASE_URL}/uploads/${product.image}`}
               alt={product.name}
               className="w-full h-48 object-cover"
             />

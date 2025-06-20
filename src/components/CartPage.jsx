@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { Trash2 } from "lucide-react";
 import Navbar from "../components/Navbar"; 
@@ -14,8 +14,8 @@ const CartPage = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) return navigate("/login");
 
-    axios
-      .get(`http://localhost:5000/api/cart/${user.id}`)
+    api
+      .get(`/cart/${user.id}`)
       .then((res) => {
         setCartItems(res.data);
         setLoading(false);
@@ -32,8 +32,8 @@ const CartPage = () => {
 
   const updateQuantity = (itemId, newQty) => {
     if (newQty < 1) return;
-    axios
-      .put(`http://localhost:5000/api/cart/update`, {
+    api
+      .put(`/cart/update`, {
         item_id: itemId,
         quantity: newQty,
       })
@@ -42,8 +42,8 @@ const CartPage = () => {
   };
 
   const removeItem = (itemId) => {
-    axios
-      .delete(`http://localhost:5000/api/cart/${itemId}`)
+    api
+      .delete(`/cart/${itemId}`)
       .then(() => fetchCart())
       .catch((err) => console.error("Remove item error:", err));
   };

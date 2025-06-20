@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from "../api";
 import ActivityLogSection from './ActivityLog';
 
 const ManageUsers = () => {
@@ -8,7 +8,7 @@ const ManageUsers = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/admin/users');
+      const res = await api.get('/admin/users');
       setUsers(res.data);
     } catch (error) {
       console.error('Failed to fetch users:', error);
@@ -17,7 +17,7 @@ const ManageUsers = () => {
 
   const deleteUser = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/admin/users/${id}`);
+      await api.delete(`/admin/users/${id}`);
       fetchUsers();
     } catch (error) {
       console.error('Failed to delete user:', error);
@@ -26,7 +26,7 @@ const ManageUsers = () => {
 
   const fetchLogs = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/admin/logs');
+      const res = await api.get('/admin/logs');
       setLogs(res.data.logs);
     } catch (error) {
       console.error('Failed to fetch logs', error);

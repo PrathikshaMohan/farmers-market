@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from "../api";
 
 const ManageOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -8,7 +8,7 @@ const ManageOrders = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/admin/orders');
+      const res = await api.get('/admin/orders');
       setOrders(res.data);
     } catch (err) {
       console.error('Failed to fetch orders:', err);
@@ -17,7 +17,7 @@ const ManageOrders = () => {
 
   const updateOrderStatus = async (id, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/admin/orders/${id}`, { status });
+      await api.put(`/admin/orders/${id}`, { status });
       fetchOrders();
       if (selectedOrder && selectedOrder.id === id) setIsModalOpen(false);
     } catch (err) {
@@ -27,7 +27,7 @@ const ManageOrders = () => {
 
   const viewOrderDetails = async (id) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/admin/orders/${id}`);
+      const res = await api.get(`/admin/orders/${id}`);
       setSelectedOrder(res.data);
       setIsModalOpen(true);
     } catch (err) {
