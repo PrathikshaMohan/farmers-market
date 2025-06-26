@@ -9,7 +9,8 @@ const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
+  const BASE_URL = import.meta.env.VITE_API_URL;
+  
   const fetchCart = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) return navigate("/login");
@@ -96,13 +97,13 @@ const CartPage = () => {
                 >
                   <td className="px-4 py-3 flex items-center gap-4">
                     <img
-                      src={`http://localhost:5000/uploads/${item.image}`}
+                      src={`${BASE_URL}/uploads/${item.image}`}
                       alt={item.name}
                       className="w-16 h-16 object-cover rounded"
                     />
                     <div>
                       <p className="font-semibold">{item.name}</p>
-                      <p className="text-sm text-gray-600">Price: Rs {item.price.toFixed(2)}</p>
+                      <p className="text-sm text-gray-600">Price: Rs {Number(item.price).toFixed(2)}</p>
                       <button
                         className="text-red-600 text-sm hover:underline mt-1"
                         onClick={() => removeItem(item.id)}
@@ -113,17 +114,25 @@ const CartPage = () => {
                   </td>
                   <td className="px-4 py-3 flex items-center gap-2">
   <input
-    type="number"
-    min={item.unit === "kg" || item.unit === "liter" ? 0.1 : 1}
-    step={item.unit === "kg" || item.unit === "liter" ? 0.1 : 1}
-    value={item.quantity}
-    onChange={(e) =>
-      updateQuantity(item.id, item.unit === "kg" || item.unit === "liter"
-        ? parseFloat(e.target.value)
-        : parseInt(e.target.value))
+  type="number"
+  min={item.unit === "kg" || item.unit === "liter" ? 0.1 : 1}
+  step={item.unit === "kg" || item.unit === "liter" ? 0.1 : 1}
+  value={item.quantity}
+  inputMode="decimal"
+  onChange={(e) => {
+    let value = e.target.value;
+
+    if (item.unit === "kg" || item.unit === "liter") {
+      updateQuantity(item.id, parseFloat(value));
+    } else {
+      // for "piece", allow only whole numbers
+      const intValue = Math.floor(parseFloat(value));
+      updateQuantity(item.id, intValue);
     }
-    className="w-20 border rounded px-2 py-1"
-  />
+  }}
+  className="w-20 border rounded px-2 py-1"
+/>
+
   <span className="text-sm text-gray-600">{item.unit}</span>
 </td>
 

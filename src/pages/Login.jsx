@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; //manage form input & UI state
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom'; //redirect
 
 
 const Login = () => {
+  //state variables
   const [phoneNumber, setPhoneNumber] = useState('');
-const [location, setLocation] = useState('');
-const BASE_URL = import.meta.env.VITE_API_URL;
+  const [location, setLocation] = useState('');
+  const BASE_URL = import.meta.env.VITE_API_URL; //backend api URL
   const [isSignUp, setIsSignUp] = useState(false);
   const [role, setRole] = useState('');
   const [full_name, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Correctly initialized
+  const navigate = useNavigate(); 
 
   const handleSignup = async (e) => {
   e.preventDefault();
@@ -50,7 +51,7 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Logging in as role:", role); // <--- check this
+    console.log("Logging in as role:", role);
     const data = {
       role,
       username,
@@ -69,11 +70,12 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 
   // Save logged-in user ID and role
   localStorage.setItem('user', JSON.stringify(result.user)); // full user info
-  localStorage.setItem('isLoggedIn', 'true'); // flag used in route protection
+  localStorage.setItem('isLoggedIn', 'true'); 
 
   // Redirect based on backend user's role
   const userRole = result.user.role;
 
+  //navigate based on role
   if (userRole === 'farmer') {
     navigate('/fdashboard');
   } else if (userRole === 'buyer') {

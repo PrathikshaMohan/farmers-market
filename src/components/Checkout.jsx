@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const CheckoutPage = () => {
+   
   const [step, setStep] = useState(1);
   const [userId, setUserId] = useState(null);
   const [items, setItems] = useState([]);
@@ -18,7 +19,7 @@ const CheckoutPage = () => {
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-
+const BASE_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user?.id) setUserId(user.id);
@@ -106,7 +107,7 @@ const CheckoutPage = () => {
     doc.text(`${index + 1}`, 20, y);
     doc.text(item.name, 30, y);
     doc.text(`${item.quantity}`, 100, y);
-    doc.text(`Rs. ${item.price.toFixed(2)}`, 130, y);
+    doc.text(`Rs. ${Number(item.price).toFixed(2)}`, 130, y);
     y += 6;
 
     doc.setFontSize(10);
@@ -140,7 +141,7 @@ const CheckoutPage = () => {
 
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:5000/api/checkout", {
+      const res = await api.post("/checkout", {
   user_id: userId,
   payment_method: "Cash on Delivery",
   firstName: formData.firstName,
@@ -283,13 +284,13 @@ const CheckoutPage = () => {
               {items.map((item) => (
                 <div key={item.id} className="flex items-center gap-4">
                   <img
-                    src={`http://localhost:5000/uploads/${item.image}`}
+                    src={`${BASE_URL}/uploads/${item.image}`}
                     alt={item.name}
                     className="w-16 h-16 object-cover rounded"
                   />
                   <div>
                     <p className="font-semibold">{item.name}</p>
-                    <p className="text-sm text-gray-600">{item.quantity} x Rs. {item.price.toFixed(2)}</p>
+                    <p className="text-sm text-gray-600">{item.quantity} x Rs. {Number(item.price).toFixed(2)}</p>
                   </div>
                 </div>
               ))}

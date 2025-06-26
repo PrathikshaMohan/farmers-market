@@ -17,13 +17,7 @@ import "./index.css";
 
 
 const App = () => {
-  const isLoggedIn = () => {
-    return localStorage.getItem("isLoggedIn") === "true";
-  };
-
   
-
- 
   return (
     <Router>
       <CartProvider>

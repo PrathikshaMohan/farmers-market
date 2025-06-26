@@ -8,7 +8,7 @@ import ManageOrders from "../components/ManageOrders";
 import AdminSettings from "../components/AdminSettings";
 
 const AdminDashboard = () => {
-    const [activeSection, setActiveSection] = useState("marketprice");
+    const [activeSection, setActiveSection] = useState("marketprice"); //tracks which page/section is currently selected
   const [role, setRole] = useState("");
 
   useEffect(() => {
@@ -27,8 +27,6 @@ const AdminDashboard = () => {
           return <ManageUsers />;
         case "orders":
           return <ManageOrders />;
-        case "reports":
-          return <Reports />;
         case "settings":
           return <AdminSettings />;
            

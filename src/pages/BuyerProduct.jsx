@@ -31,13 +31,13 @@ const [showOrders, setShowOrders] = useState(false);
 const BASE_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
     api
-      .get("/products")
+      .get("/products") //fetch product list
       .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
 
   useEffect(() => {
-  const restoredProduct = localStorage.getItem("pendingProduct");
+  const restoredProduct = localStorage.getItem("pendingProduct"); //restore product after login
   const quantity = localStorage.getItem("pendingQuantity");
 
   if (restoredProduct) {
@@ -58,7 +58,7 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 
 
   useEffect(() => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user")); //order tracking
 
   if (!user || !user.id) {
     setOrderStatus("Please log in to track your order.");

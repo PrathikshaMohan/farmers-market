@@ -1,9 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"; //used for animation
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-const fadeInUp = {
+const fadeInUp = { //makes elements appear from below with a fade effect
   hidden: { opacity: 0, y: 50 },
   visible: {
     opacity: 1,
@@ -12,7 +12,7 @@ const fadeInUp = {
   },
 };
 
-const staggerContainer = {
+const staggerContainer = { //delays animations of child elements one after another (staggered effect)
   hidden: {},
   visible: {
     transition: {
@@ -22,7 +22,7 @@ const staggerContainer = {
 };
 
 const About = () => {
-  const scrollToSection = () => {
+  const scrollToSection = () => { //help to scroll smoothly
     const section = document.getElementById("section-agriculture");
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });

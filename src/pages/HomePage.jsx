@@ -5,7 +5,9 @@ import Why from "../components/Why";
 import ProductCategories from "../components/MainProduct";
 import Footer from "../components/Footer";
 
+//functional component
 const HomePage = () => {
+//jsx returned
   return (
     <div>
       <Navbar />
