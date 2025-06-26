@@ -1,6 +1,6 @@
 
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 import NotificationBell from "./NotificationBell";
 import {LogOut } from "lucide-react";
 
@@ -26,13 +26,15 @@ const FHeader = ()=>{
   onClick={() => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    window.location.href = "/login";
+    navigate("/login");
   }}
-  className="flex items-center bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 hover:text-white transition-all"
+  className="flex items-center bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
+  aria-label="Log out"
 >
-  <LogOut className="w-5 h-5 mr-2" />
+  <LogOut className="w-5 h-5 mr-2" aria-hidden="true" />
   LogOut
 </button>
+
         </div>
       </div>
 
