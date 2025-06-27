@@ -117,7 +117,7 @@ const CartPage = () => {
   type="number"
   min={item.unit === "kg" || item.unit === "liter" ? 0.1 : 1}
   step={item.unit === "kg" || item.unit === "liter" ? 0.1 : 1}
-  value={item.quantity}
+  value={item.unit === "piece" ? Math.floor(item.quantity) : item.quantity}
   inputMode="decimal"
   onChange={(e) => {
     let value = e.target.value;

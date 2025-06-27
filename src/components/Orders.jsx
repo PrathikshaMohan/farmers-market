@@ -17,7 +17,8 @@ const Orders = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await api.get(`/orders/${farmerId}`);
+      const res = await api.get(`/notifications/orders/${farmerId}`);
+      console.log("Fetched Orders:", res.data); // ✅ check this
       setOrders(res.data);
     } catch (err) {
       console.error('Failed to fetch orders:', err);
@@ -145,51 +146,60 @@ const Orders = () => {
 
                 {activePickupOrderId === order.id && (
                   <tr>
-                    <td colSpan="6" style={{ backgroundColor: '#f9f9f9', padding: '1rem' }}>
-                      <h4>Set Pickup Details for Order #{order.id}</h4>
-                      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '1rem' }}>
-                        <input
-                          type="text"
-                          placeholder="Pickup Location"
-                          value={pickupInfo.location}
-                          onChange={(e) => setPickupInfo({ ...pickupInfo, location: e.target.value })}
-                          style={{ padding: '0.5rem', flex: 1 }}
-                        />
-                        <input
-                          type="text"
-                          placeholder="Pickup Time Slot"
-                          value={pickupInfo.timeSlot}
-                          onChange={(e) => setPickupInfo({ ...pickupInfo, timeSlot: e.target.value })}
-                          style={{ padding: '0.5rem', flex: 1 }}
-                        />
-                        <button
-                          onClick={handlePickupSubmit}
-                          style={{
-                            backgroundColor: '#2ecc71',
-                            color: '#fff',
-                            padding: '0.5rem 1rem',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer'
-                          }}
-                        >
-                          Submit
-                        </button>
-                        <button
-                          onClick={() => setActivePickupOrderId(null)}
-                          style={{
-                            backgroundColor: '#ccc',
-                            padding: '0.5rem 1rem',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer'
-                          }}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
+  <td colSpan="6" style={{ backgroundColor: '#f9f9f9', padding: '1rem' }}>
+    <h4>Set Pickup Details for Order #{order.id}</h4>
+    <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '1rem' }}>
+      <input
+        type="text"
+        placeholder="Pickup Location"
+        value={pickupInfo.location}
+        onChange={(e) => setPickupInfo({ ...pickupInfo, location: e.target.value })}
+        style={{ padding: '0.5rem', flex: 1 }}
+      />
+      <select
+        value={pickupInfo.timeSlot}
+        onChange={(e) => setPickupInfo({ ...pickupInfo, timeSlot: e.target.value })}
+        style={{ padding: '0.5rem', flex: 1 }}
+      >
+        <option value="" disabled>
+          Select Time Slot
+        </option>
+        <option value="08:00 AM - 10:00 AM">08:00 AM - 10:00 AM</option>
+        <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
+        <option value="12:00 PM - 02:00 PM">12:00 PM - 02:00 PM</option>
+        <option value="02:00 PM - 04:00 PM">02:00 PM - 04:00 PM</option>
+        <option value="04:00 PM - 06:00 PM">04:00 PM - 06:00 PM</option>
+        <option value="06:00 PM - 08:00 PM">06:00 PM - 08:00 PM</option>
+      </select>
+      <button
+        onClick={handlePickupSubmit}
+        style={{
+          backgroundColor: '#2ecc71',
+          color: '#fff',
+          padding: '0.5rem 1rem',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+        }}
+      >
+        Submit
+      </button>
+      <button
+        onClick={() => setActivePickupOrderId(null)}
+        style={{
+          backgroundColor: '#ccc',
+          padding: '0.5rem 1rem',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+        }}
+      >
+        Cancel
+      </button>
+    </div>
+  </td>
+</tr>
+
                 )}
               </React.Fragment>
             ))}
